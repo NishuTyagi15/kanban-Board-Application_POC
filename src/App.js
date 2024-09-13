@@ -1,17 +1,17 @@
-import logo from './logo.svg';
+import React from 'react';
 import './App.css';
+import KanbanBoard from './components/KanbanBoard';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
+
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-
-      </header>
-    </div>
+    <React.StrictMode>
+    <DndProvider backend={HTML5Backend}>
+      <KanbanBoard />
+    </DndProvider>
+  </React.StrictMode>
   );
 }
 

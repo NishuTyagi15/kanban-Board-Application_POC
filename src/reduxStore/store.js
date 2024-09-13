@@ -1,6 +1,6 @@
 import { createStore } from 'redux';
-import userReducer from './reducer';
+import taskReducer from './reducers/taskReducer';
 
-const store = createStore(userReducer);
+const store = createStore(taskReducer);
 
 export default store;

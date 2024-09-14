@@ -23,7 +23,7 @@ const Column = ({ title, tasks, moveTask, columnName }) => {
         padding: '10px',
         border: '1px solid #ccc',
         minHeight: '400px',
-        backgroundColor: isOver ? '#e0ffe0' : '#f9f9f9', // Add drop feedback
+        backgroundColor: isOver ? '#e0ffe0' : '#f9f9f9',
         transition: 'background-color 0.3s ease',
       }}
     >

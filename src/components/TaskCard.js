@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { useDrag } from 'react-dnd';
 import { FaEdit, FaCommentAlt } from 'react-icons/fa'; 
+import { connect } from 'react-redux';
+import { addComment, editTask } from '../reduxStore/actions';
 
-const TaskCard = ({ task, columnName, editTask, addComment }) => {
+const TaskCard = ({ task, columnName, addComment, editTask }) => {
   const [{ isDragging }, drag] = useDrag({
     type: 'TASK',
     item: { id: task.id, column: columnName },
@@ -83,4 +85,12 @@ const TaskCard = ({ task, columnName, editTask, addComment }) => {
   );
 };
 
-export default TaskCard;
+const mapStateToProps = (state) => ({
+});
+
+const mapDispatchToProps = {
+  editTask,
+  addComment
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(TaskCard);

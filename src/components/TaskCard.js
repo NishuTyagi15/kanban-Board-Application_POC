@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useDrag } from 'react-dnd';
 import { FaEdit, FaCommentAlt } from 'react-icons/fa'; 
 
-const TaskCard = ({ task, columnName }) => {
+const TaskCard = ({ task, columnName, editTask, addComment }) => {
   const [{ isDragging }, drag] = useDrag({
     type: 'TASK',
     item: { id: task.id, column: columnName },
@@ -10,6 +10,24 @@ const TaskCard = ({ task, columnName }) => {
       isDragging: monitor.isDragging(),
     }),
   });
+
+  const handleEditClick = () => {
+    editTask(task.id, columnName);
+};
+
+  const [showComments, setShowComments] = useState(false);
+  const [commentText, setCommentText] = useState('');
+
+  const toggleComments = () => {
+    setShowComments(prevState => !prevState);
+  };
+
+  const handleAddComment = () => {
+    if (commentText.trim()) {
+      addComment(task.id, columnName, commentText);
+      setCommentText('');
+    }
+  };
 
   return (
     <div
@@ -37,14 +55,30 @@ const TaskCard = ({ task, columnName }) => {
           />
         )}
 
-        <div className="task-comments">
-          <FaCommentAlt /> {task.comments || 0}
+        <div className="task-comments" onClick={toggleComments}>
+          <FaCommentAlt /> {task.comments.length || 0}
         </div>
 
-        <div className="task-edit">
+        <div className="task-edit" onClick={handleEditClick}>
           <FaEdit />
         </div>
       </div>
+      {showComments && (
+        <div className="task-comments-section">
+          <ul>
+            {task.comments.map((comment, index) => (
+              <li key={index}>{comment}</li>
+            ))}
+          </ul>
+          <input
+            type="text"
+            placeholder="Add a comment..."
+            value={commentText}
+            onChange={(e) => setCommentText(e.target.value)}
+          />
+          <button onClick={handleAddComment}>Add Comment</button>
+        </div>
+      )}
     </div>
   );
 };

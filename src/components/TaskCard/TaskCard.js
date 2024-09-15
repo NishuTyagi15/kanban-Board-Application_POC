@@ -1,16 +1,21 @@
 import React, { useState } from 'react';
 import { useDrag } from 'react-dnd';
-// import { FaEdit, FaCommentAlt } from 'react-icons/fa';
 import { connect } from 'react-redux';
-import { addComment, editTask } from '../reduxStore/actions';
+import { addComment, editTask } from '../../reduxStore/actions';
 import { Avatar, Dialog, DialogTitle, DialogContent, DialogActions, Button, TextField, Typography } from '@mui/material';
-import './TaskCard.css'
+import './TaskCard.css';
 import { Edit, ModeComment } from '@mui/icons-material';
 
 const TaskCard = ({ task, columnName, addComment, editTask }) => {
   const [showCommentsDialog, setShowCommentsDialog] = useState(false);
   const [showAddCommentDialog, setShowAddCommentDialog] = useState(false);
+  const [showEditDialog, setShowEditDialog] = useState(false); // For Edit Dialog
   const [commentText, setCommentText] = useState('');
+
+  // State to hold the task details when editing
+  const [editedTaskTitle, setEditedTaskTitle] = useState(task.title);
+  const [editedTaskImage, setEditedTaskImage] = useState(task.image);
+  const [editedTaskTags, setEditedTaskTags] = useState(task.tags.join(', '));
 
   const [{ isDragging }, drag] = useDrag({
     type: 'TASK',
@@ -20,8 +25,23 @@ const TaskCard = ({ task, columnName, addComment, editTask }) => {
     }),
   });
 
+  // Handle opening the edit dialog and pre-populating the fields
   const handleEditClick = () => {
-    editTask(task.id, columnName);
+    setEditedTaskTitle(task.title);
+    setEditedTaskImage(task.image);
+    setEditedTaskTags(task.tags.join(', '));
+    setShowEditDialog(true);
+  };
+
+  // Handle editing the task and submitting the changes
+  const handleEditSubmit = () => {
+    const updatedTask = {
+      title: editedTaskTitle,
+      image: editedTaskImage,
+      tags: editedTaskTags.split(',').map(tag => tag.trim()),
+    };
+    editTask(task.id, columnName, updatedTask);
+    setShowEditDialog(false);
   };
 
   const toggleCommentsDialog = () => {
@@ -36,7 +56,7 @@ const TaskCard = ({ task, columnName, addComment, editTask }) => {
     if (commentText.trim()) {
       addComment(task.id, columnName, commentText);
       setCommentText('');
-      toggleAddCommentDialog(); // Close the add comment dialog
+      toggleAddCommentDialog();
     }
   };
 
@@ -53,11 +73,13 @@ const TaskCard = ({ task, columnName, addComment, editTask }) => {
         <Avatar alt="avatar-image" src={task.image !== '' ? task.image : "/static/images/avatar/1.jpg"} />
       </div>
       <div className="task-tags">
-        {task.tags && task.tags.map((tag, index) => (
-          <span key={index} className={`task-tag ${tag}`}>
-            {tag}
-          </span>
-        ))}
+        <div>
+          {task.tags && task.tags.map((tag, index) => (
+            <span className={`task-tag ${tag}`}>
+              {tag}
+            </span>
+          ))}
+        </div>
         <div className='edit-comment-task'>
           <div className="task-comments" onClick={toggleCommentsDialog}>
             <ModeComment /> {task.comments.length || ''}
@@ -68,6 +90,7 @@ const TaskCard = ({ task, columnName, addComment, editTask }) => {
         </div>
       </div>
 
+      {/* Comments Dialog */}
       <Dialog open={showCommentsDialog} onClose={toggleCommentsDialog} fullWidth maxWidth="sm">
         <DialogTitle>Comments</DialogTitle>
         <DialogContent>
@@ -75,10 +98,10 @@ const TaskCard = ({ task, columnName, addComment, editTask }) => {
             <div className="comments-container">
               {task.comments.map((comment, index) => (
                 <div key={index} className={`comment ${index % 2 === 0 ? 'comment-even' : 'comment-odd'}`}>
-                <Typography variant="body1">
-                  {comment}
-                </Typography>
-              </div>
+                  <Typography variant="body1">
+                    {comment}
+                  </Typography>
+                </div>
               ))}
             </div>
           ) : (
@@ -91,6 +114,7 @@ const TaskCard = ({ task, columnName, addComment, editTask }) => {
         </DialogActions>
       </Dialog>
 
+      {/* Add Comment Dialog */}
       <Dialog open={showAddCommentDialog} onClose={toggleAddCommentDialog} fullWidth maxWidth="sm">
         <DialogTitle>Add Comment</DialogTitle>
         <DialogContent>
@@ -111,16 +135,45 @@ const TaskCard = ({ task, columnName, addComment, editTask }) => {
           <Button onClick={handleAddComment}>Add</Button>
         </DialogActions>
       </Dialog>
+
+      {/* Edit Task Dialog */}
+      <Dialog open={showEditDialog} onClose={() => setShowEditDialog(false)} fullWidth maxWidth="sm">
+        <DialogTitle>Edit Task</DialogTitle>
+        <DialogContent>
+          <TextField
+            label="Title"
+            fullWidth
+            value={editedTaskTitle}
+            onChange={(e) => setEditedTaskTitle(e.target.value)}
+            margin="dense"
+          />
+          <TextField
+            label="Image URL"
+            fullWidth
+            value={editedTaskImage}
+            onChange={(e) => setEditedTaskImage(e.target.value)}
+            margin="dense"
+          />
+          <TextField
+            label="Tags (comma separated)"
+            fullWidth
+            value={editedTaskTags}
+            onChange={(e) => setEditedTaskTags(e.target.value)}
+            margin="dense"
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setShowEditDialog(false)}>Cancel</Button>
+          <Button onClick={handleEditSubmit}>Save Changes</Button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 };
 
-const mapStateToProps = (state) => ({
-});
-
 const mapDispatchToProps = {
   editTask,
-  addComment
+  addComment,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(TaskCard);
+export default connect(null, mapDispatchToProps)(TaskCard);

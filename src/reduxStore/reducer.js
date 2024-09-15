@@ -36,14 +36,6 @@ const taskReducer = (state = initialState, action) => {
                     [toColumn]: [...state.tasks[toColumn], taskToMove]
                 }
             };
-        case ADD_NEW_TASK:
-            return {
-                ...state,
-                [action.payload.status]: [
-                    ...state[action.payload.status],
-                    action.payload
-                ]
-            };
         case EDIT_TASK:
             const { taskId: editTaskId, column: editColumn, updatedTask } = action.payload;
             return {
@@ -59,7 +51,7 @@ const taskReducer = (state = initialState, action) => {
             const { taskId: commentTaskId, column: commentColumn, comment } = action.payload;
             const updatedTasks = state.tasks[commentColumn].map(task =>
                 task.id === commentTaskId
-                    ? { ...task, comments: [...(task.comments || []), comment] } // Ensure comments is an array
+                    ? { ...task, comments: [...(task.comments || []), comment] }
                     : task
             );
             return {
@@ -70,16 +62,30 @@ const taskReducer = (state = initialState, action) => {
                 }
             };
         case ADD_NEW_STATUS: {
-            const { statusName } = action.payload;
-            // Ensure statusName is added as an empty array, not as [{}]
+            const { status, title, tags, image } = action.payload.newStatus;
+            console.log("tags", tags)
             return {
                 ...state,
                 tasks: {
                     ...state.tasks,
-                    [statusName]: [] // Empty array for new status
+                    [status]: [
+                        { id: state.tasks?.length + 1, title, tags, comments: [], image }
+                    ]
                 }
             };
         }
+        case ADD_NEW_TASK:
+            return {
+                ...state,
+                tasks: {
+                    ...state.tasks,
+                    [action.payload.status]: [
+                        ...state.tasks[action.payload.status],
+                        action.payload
+                    ]
+                }
+            };
+
         default:
             return state;
     }

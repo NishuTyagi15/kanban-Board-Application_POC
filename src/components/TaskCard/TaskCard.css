@@ -31,11 +31,13 @@
 .task-tag {
     font-size: 0.85em;
     padding: 5px 12px;
+    margin-right: 8px;
     border-radius: 12px;
-    color: #fff;
+    color: #686666;
+    background-color: rgb(234, 233, 233);
 }
 
-.task-tag.easy {
+/* .task-tag.easy {
     background-color: #2ecc71;
 }
 
@@ -45,12 +47,12 @@
 
 .task-tag.jet {
     background-color: #3498db;
-}
+} */
 
-.task-tag.webix {
+/* .task-tag.webix {
     background-color: #f1c40f;
     color: #fff;
-}
+} */
 
 .task-comments,
 .task-edit {

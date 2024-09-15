@@ -1,15 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import Column from './Column';
-import { moveTask } from '../reduxStore/actions';
+import Column from './Column/Column';
+import { addNewTask, moveTask } from '../reduxStore/actions';
 import Sidebar from './Sidebar/Sidebar';
 import { Add } from '@mui/icons-material';
 import { IconButton } from '@mui/material';
-import AddTaskForm from './AddTaskForm';
+import AddNewStatus from './AddNewStatusForm/AddNewStatus';
+import AddTaskDialog from './AddTaskDialog/AddTaskDialog';
 
 const KanbanBoard = (props) => {
   const [openColumns, setOpenColumns] = useState([]);
   const [isAddNewTaskFormOpen, setisAddNewTaskFormOpen] = useState(false);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [selectedStatus, setSelectedStatus] = useState('');
 
   useEffect(() => {
     if (props.tasks.done && !openColumns.includes('done')) {
@@ -36,6 +39,19 @@ const KanbanBoard = (props) => {
     setisAddNewTaskFormOpen(false);
   };
 
+  const handleOpenDialog = (status) => {
+    setSelectedStatus(status);
+    setIsDialogOpen(true);
+  };
+
+  const handleCloseDialog = () => {
+    setIsDialogOpen(false);
+  };
+
+  const handleAddTask = (status, newTask) => {
+    props.addNewTask({ status, ...newTask });
+  };
+
   return (
     <div className="board">
       <Sidebar onTaskClick={handleTaskClick} openColumns={openColumns} />
@@ -48,12 +64,19 @@ const KanbanBoard = (props) => {
           moveTask={props.moveTask}
           columnName={status}
           onClose={() => handleColumnClose(status)}
+          onAddTask={handleOpenDialog}
         />
       ))}
+       <AddTaskDialog
+        open={isDialogOpen}
+        onClose={handleCloseDialog}
+        columnName={selectedStatus}
+        onSubmit={handleAddTask}
+      />
       <IconButton className='add-new-status' onClick={handleOpenAddTaskForm}>
         <Add />
       </IconButton>
-      <AddTaskForm open={isAddNewTaskFormOpen} handleClose={handleCloseAddTaskForm} />
+      <AddNewStatus open={isAddNewTaskFormOpen} handleClose={handleCloseAddTaskForm} />
     </div>
   );
 };
@@ -64,6 +87,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = {
   moveTask,
+  addNewTask
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(KanbanBoard);

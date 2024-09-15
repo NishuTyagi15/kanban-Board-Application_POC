@@ -25,7 +25,7 @@ export const addComment = (taskId, column, comment) => ({
     payload: { taskId, column, comment }
 });
 
-export const addNewStatus = (statusName) => ({
+export const addNewStatus = (newStatus) => ({
     type: ADD_NEW_STATUS,
-    payload: { statusName }
+    payload: { newStatus }
 });

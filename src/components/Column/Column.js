@@ -1,11 +1,14 @@
 import React from 'react';
 import { useDrop } from 'react-dnd';
-import TaskCard from './TaskCard';
+import TaskCard from '../TaskCard/TaskCard';
 import { IconButton, Paper } from '@mui/material';
 import './Column.css';
-import { ArrowBackIos } from '@mui/icons-material';
+import { ArrowBackIos, Add } from '@mui/icons-material';
+import { addNewTask } from '../../reduxStore/actions';
+import { connect } from 'react-redux';
 
-const Column = ({ title, tasks, moveTask, columnName, onClose, style }) => {
+const Column = ({ title, tasks, moveTask, columnName, onClose, onAddTask }) => {
+
   const [{ isOver }, drop] = useDrop({
     accept: 'TASK',
     drop: (item) => {
@@ -17,6 +20,10 @@ const Column = ({ title, tasks, moveTask, columnName, onClose, style }) => {
       isOver: monitor.isOver(),
     }),
   });
+
+  const handleAddClick = () => {
+    onAddTask(columnName);
+  };
 
   return (
     <div
@@ -30,18 +37,31 @@ const Column = ({ title, tasks, moveTask, columnName, onClose, style }) => {
         position: 'relative',
       }}
     >
-      <Paper className='task-stack-title'>{title} <IconButton
+      <Paper className='task-stack-title'>{title} 
+      <div className='action-buttons'>
+      <IconButton
+          onClick={handleAddClick}
+          style={{ position: 'absolute', top: '10px', right: '40px' }}
+        >
+          <Add />
+      </IconButton>
+      <IconButton
         onClick={onClose}
         style={{ position: 'absolute', top: '10px', right: '8px' }}
       >
         <ArrowBackIos className='back-arrow-icon'/>
       </IconButton>
+      </div>
       </Paper>
-      {tasks.map(task => (
+      {tasks?.map(task => (
         <TaskCard key={task.id} task={task} columnName={columnName} />
       ))}
     </div>
   );
 };
 
-export default Column;
+const mapDispatchToProps = {
+  addNewTask
+};
+
+export default connect(null, mapDispatchToProps)(Column);

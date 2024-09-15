@@ -43,3 +43,7 @@ h4 {
   display: flex;
   align-self: end;
 }
+
+.addtag {
+  float: right;
+}

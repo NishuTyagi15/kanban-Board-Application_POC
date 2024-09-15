@@ -1,4 +1,4 @@
-import { TASKS_STATUS, MOVE_TASK, ADD_NEW_TASK, EDIT_TASK, ADD_COMMENT, ADD_NEW_STATUS } from '../constants/utility';
+import { MOVE_TASK, ADD_NEW_TASK, EDIT_TASK, ADD_COMMENT, ADD_NEW_STATUS } from '../constants/utility';
 
 const initialState = {
     taskStatus: {},
@@ -20,11 +20,6 @@ const initialState = {
 
 const taskReducer = (state = initialState, action) => {
     switch (action.type) {
-        case TASKS_STATUS:
-            return {
-                ...state,
-                taskStatus: action.payload
-            };
         case MOVE_TASK:
             const { taskId, fromColumn, toColumn } = action.payload;
             const taskToMove = state.tasks[fromColumn].find(task => task.id === taskId);

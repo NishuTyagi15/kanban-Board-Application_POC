@@ -44,14 +44,17 @@ const TaskCard = ({ task, columnName, addComment, editTask }) => {
     setShowEditDialog(false);
   };
 
+  //Handle the comments dialog to show comment with add comment option
   const toggleCommentsDialog = () => {
     setShowCommentsDialog(prevState => !prevState);
   };
 
+  //Funtion to open the add comment dialog
   const toggleAddCommentDialog = () => {
     setShowAddCommentDialog(prevState => !prevState);
   };
 
+  //function to handle the add comment and store it
   const handleAddComment = () => {
     if (commentText.trim()) {
       addComment(task.id, columnName, commentText);
@@ -74,8 +77,8 @@ const TaskCard = ({ task, columnName, addComment, editTask }) => {
       </div>
       <div className="task-tags">
         <div>
-          {task.tags && task.tags.map((tag, index) => (
-            <span className={`task-tag ${tag}`}>
+          {task?.tags.map((tag, index) => (
+            <span className={`task-tag ${tag}`} key={index}>
               {tag}
             </span>
           ))}

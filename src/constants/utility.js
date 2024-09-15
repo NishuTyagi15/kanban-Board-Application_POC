@@ -1,4 +1,3 @@
-export const TASKS_STATUS = 'TASKS_STATUS';
 export const MOVE_TASK = 'MOVE_TASK';
 export const ADD_NEW_TASK = 'ADD_NEW_TASK';
 export const EDIT_TASK = 'EDIT_TASK';

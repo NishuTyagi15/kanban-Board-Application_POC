@@ -9,6 +9,7 @@ import { connect } from 'react-redux';
 
 const Column = ({ title, tasks, moveTask, columnName, onClose, onAddTask }) => {
 
+  //functopn to handle amd store the drag & drop updated data
   const [{ isOver }, drop] = useDrop({
     accept: 'TASK',
     drop: (item) => {
@@ -21,6 +22,7 @@ const Column = ({ title, tasks, moveTask, columnName, onClose, onAddTask }) => {
     }),
   });
 
+  //function to handle the click to add a new task
   const handleAddClick = () => {
     onAddTask(columnName);
   };

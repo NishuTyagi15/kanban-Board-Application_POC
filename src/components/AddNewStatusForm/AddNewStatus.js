@@ -11,6 +11,7 @@ const AddNewStatus = ({ open, handleClose, addNewStatus }) => {
   const [tagInput, setTagInput] = useState('');
   const [image, setImage] = useState('');
 
+  //function to submit the new status details and storing the same in the store
   const handleSubmit = () => {
     if (title.trim()) {
       addNewStatus({ status, title, tags, image });
@@ -18,6 +19,7 @@ const AddNewStatus = ({ open, handleClose, addNewStatus }) => {
     }
   };
 
+  //function to handle the tags inputs data and store it in array
   const handleAddTag = () => {
     if (tagInput.trim()) {
       setTags([...tags, tagInput.trim()]);
@@ -25,10 +27,12 @@ const AddNewStatus = ({ open, handleClose, addNewStatus }) => {
     }
   };
 
+  //function to remove tag data when delete button clicked
   const handleRemoveTag = (tagToRemove) => {
     setTags(tags.filter(tag => tag !== tagToRemove));
   };
 
+  //function to close the add status form and reset the form data
   const handleFormClose = () => {
     handleClose();
     setStatus(''); setTitle(''); setTags([]); setImage([])

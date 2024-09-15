@@ -7,6 +7,7 @@ const AddTaskDialog = ({ open, onClose, columnName, onSubmit }) => {
   const [taskImage, setTaskImage] = useState('');
   const [taskTags, setTaskTags] = useState('');
 
+  //function to submit and store the new task data
   const handleSubmit = () => {
     const newTask = {
       id: Date.now(),
@@ -19,6 +20,7 @@ const AddTaskDialog = ({ open, onClose, columnName, onSubmit }) => {
     handleialogClose();
   };
 
+  //function to close the add task dialog and reset the dialog data
   const handleialogClose = () => {
     onClose();
     setTaskTitle(''); setTaskImage(''); setTaskTags('');

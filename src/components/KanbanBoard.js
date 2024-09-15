@@ -10,16 +10,18 @@ import AddTaskDialog from './AddTaskDialog/AddTaskDialog';
 
 const KanbanBoard = (props) => {
   const [openColumns, setOpenColumns] = useState([]);
-  const [isAddNewTaskFormOpen, setisAddNewTaskFormOpen] = useState(false);
+  const [isAddNewTaskFormOpen, setIsAddNewTaskFormOpen] = useState(false);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [selectedStatus, setSelectedStatus] = useState('');
 
+  //to handle the open state of first task status by default
   useEffect(() => {
     if (props.tasks.done && !openColumns.includes('done')) {
       setOpenColumns(['done']);
     }
   }, [props.tasks, openColumns]);
 
+  //function to open the task column and to close the sidebar panel
   const handleTaskClick = (status) => {
     setOpenColumns((prevColumns) => {
       const updatedColumns = prevColumns.filter((col) => col !== status);
@@ -27,27 +29,33 @@ const KanbanBoard = (props) => {
     });
   };
 
+  //function to close the task column and show sidebar
   const handleColumnClose = (status) => {
     setOpenColumns((prevColumns) => prevColumns.filter((col) => col !== status));
   };
 
+  //function to open the add task form
   const handleOpenAddTaskForm = () => {
-    setisAddNewTaskFormOpen(true);
+    setIsAddNewTaskFormOpen(true);
   };
 
+  //function to close the add task form
   const handleCloseAddTaskForm = () => {
-    setisAddNewTaskFormOpen(false);
+    setIsAddNewTaskFormOpen(false);
   };
 
+  //function to open the add task dialog
   const handleOpenDialog = (status) => {
     setSelectedStatus(status);
     setIsDialogOpen(true);
   };
 
+  //function to close the add task dialog
   const handleCloseDialog = () => {
     setIsDialogOpen(false);
   };
 
+  //function to handle the add task functionality
   const handleAddTask = (status, newTask) => {
     props.addNewTask({ status, ...newTask });
   };

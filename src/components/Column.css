@@ -1,0 +1,11 @@
+.task-stack-title {
+    /* width: 216px; */
+    height: 4vh;
+    margin-bottom: 10px;
+    padding: 12px 0px 0px 12px;
+    border-radius: 0px;
+}
+
+.back-arrow-icon {
+    width: 14px !important;
+}

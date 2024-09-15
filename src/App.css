@@ -21,109 +21,6 @@ h4 {
 .board {
   display: flex;
   justify-content: space-between;
-  gap: 20px;
-}
-
-/* Column Styling */
-.column {
-  background-color: #ffffff;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  padding: 20px;
-  width: 270px;
-  min-height: 500px;
-  display: flex;
-  flex-direction: column;
-}
-
-.column:last-child {
-  margin-right: 0;
-}
-
-/* Task Card Styling */
-.task {
-  background-color: #ffffff;
-  border: 1px solid #e0e0e0;
-  border-radius: 8px;
-  padding: 15px;
-  margin-bottom: 15px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-  cursor: pointer;
-}
-
-.task:hover {
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-  transform: translateY(-5px);
-}
-
-/* Tag Styling */
-.task-tags {
-  display: flex;
-  flex-wrap: wrap;
-  margin-top: 10px;
-  gap: 8px;
-}
-
-.task-tag {
-  font-size: 0.85em;
-  padding: 5px 12px;
-  border-radius: 12px;
-  color: #fff;
-}
-
-.task-tag.easy {
-  background-color: #2ecc71;
-}
-
-.task-tag.hard {
-  background-color: #e74c3c;
-}
-
-.task-tag.jet {
-  background-color: #3498db;
-}
-
-.task-tag.webix {
-  background-color: #f1c40f;
-  color: #fff;
-}
-
-/* Task Meta Information */
-.task-meta {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 15px;
-  font-size: 0.85em;
-}
-
-.task-avatar {
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-}
-
-.task-comments, .task-edit {
-  display: flex;
-  align-items: center;
-  cursor: pointer;
-}
-
-.task-comments svg, .task-edit svg {
-  margin-right: 5px;
-}
-
-.task-comments {
-  color: #777;
-}
-
-.task-edit {
-  color: #007bff;
-}
-
-.task-comments:hover, .task-edit:hover {
-  text-decoration: underline;
 }
 
 /* Button Styling */
@@ -140,4 +37,9 @@ h4 {
 
 .add-task-btn:hover {
   background-color: #ff6b81;
+}
+
+.add-new-status {
+  display: flex;
+  align-self: end;
 }

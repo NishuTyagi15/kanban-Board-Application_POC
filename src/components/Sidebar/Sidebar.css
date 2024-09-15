@@ -1,0 +1,26 @@
+.sidebar {
+    display: flex;
+}
+
+.sidebar-paper {
+    width: 8px;
+    height: 90vh;
+    padding: 10px;
+    margin: 0px 6px 10px 6px;
+    writing-mode: vertical-lr;
+    border: 1px solid lightgrey;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.sidebar-status {
+    color: deepskyblue;
+    display: flex;
+    justify-content: end;
+}
+
+.arrow-icon {
+    color: deepskyblue;
+    width: 14px !important;
+}
